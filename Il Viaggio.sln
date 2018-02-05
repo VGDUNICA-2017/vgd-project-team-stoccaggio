@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Il Viaggio", "Il Viaggio.csproj", "{9399D7E7-CE5D-79F1-62B4-50A5E4FDA839}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Il Viaggio.Editor", "Il Viaggio.Editor.csproj", "{A8BBFB1E-FF36-3EE3-4E61-B4ED0AD7A891}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9399D7E7-CE5D-79F1-62B4-50A5E4FDA839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9399D7E7-CE5D-79F1-62B4-50A5E4FDA839}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9399D7E7-CE5D-79F1-62B4-50A5E4FDA839}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9399D7E7-CE5D-79F1-62B4-50A5E4FDA839}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8BBFB1E-FF36-3EE3-4E61-B4ED0AD7A891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8BBFB1E-FF36-3EE3-4E61-B4ED0AD7A891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8BBFB1E-FF36-3EE3-4E61-B4ED0AD7A891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8BBFB1E-FF36-3EE3-4E61-B4ED0AD7A891}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
