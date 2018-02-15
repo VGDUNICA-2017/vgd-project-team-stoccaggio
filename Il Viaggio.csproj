@@ -93,6 +93,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\animation.cs" />
+    <Compile Include="Assets\Scripts\anim.cs" />
+    <Compile Include="Assets\Scripts\Checkpoints.cs" />
+    <Compile Include="Assets\Scripts\Collectible.cs" />
+    <Compile Include="Assets\Scripts\doorOpenandClose.cs" />
+    <Compile Include="Assets\Scripts\EnemyFieldofFeel.cs" />
+    <Compile Include="Assets\Scripts\EnemyFieldofView.cs" />
+    <Compile Include="Assets\Scripts\interactables.cs" />
+    <Compile Include="Assets\Scripts\makesSound.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Pointable.cs" />
+    <Compile Include="Assets\Scripts\Pointer.cs" />
+    <Compile Include="Assets\Scripts\VerticalStairs.cs" />
+    <Compile Include="Assets\Scripts\waypoints.cs" />
     <Compile Include="Assets\Terra\LowPolyWater_Pack\Scripts\LowPolyWater.cs" />
     <Compile Include="Assets\Terra\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
     <Compile Include="Assets\Terra\SampleScenes\Menu\Scripts\PauseMenu.cs" />
@@ -197,8 +211,11 @@
     <Compile Include="Assets\Terra\Standard Assets\Vehicles\Car\Scripts\SkidTrail.cs" />
     <Compile Include="Assets\Terra\Standard Assets\Vehicles\Car\Scripts\Suspension.cs" />
     <Compile Include="Assets\Terra\Standard Assets\Vehicles\Car\Scripts\WheelEffects.cs" />
+    <Compile Include="Assets\UI\UIController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Shaders\OutlineDiffuse.shader" />
+    <None Include="Assets\TODO.txt" />
     <None Include="Assets\Terra\LowPolyWater_Pack\LowPoly Island\Credits.txt" />
     <None Include="Assets\Terra\LowPolyWater_Pack\Shaders\WaterShaded.shader" />
     <None Include="Assets\Terra\SampleScenes\Shaders\Skybox-Procedural.shader" />

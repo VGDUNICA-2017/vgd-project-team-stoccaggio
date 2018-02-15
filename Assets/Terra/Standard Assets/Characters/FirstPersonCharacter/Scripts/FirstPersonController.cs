@@ -11,7 +11,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
     public class FirstPersonController : MonoBehaviour
     {
         [SerializeField] private bool m_IsWalking;
-        [SerializeField] private float m_WalkSpeed;
+        [SerializeField] private bool m_IsCrouch; /* Bool Crouch */
+        [SerializeField] protected float m_WalkSpeed;
         [SerializeField] private float m_RunSpeed;
         [SerializeField] [Range(0f, 1f)] private float m_RunstepLenghten;
         [SerializeField] private float m_JumpSpeed;
@@ -206,7 +207,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // Read input
             float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
             float vertical = CrossPlatformInputManager.GetAxis("Vertical");
-
+            bool wascrouch = m_IsCrouch;
             bool waswalking = m_IsWalking;
 
 #if !MOBILE_INPUT
@@ -216,6 +217,21 @@ namespace UnityStandardAssets.Characters.FirstPerson
 #endif
             // set the desired speed to be walking or running
             speed = m_IsWalking ? m_WalkSpeed : m_RunSpeed;
+
+            /* Crouch  */
+            m_IsCrouch = Input.GetKey(KeyCode.LeftControl);
+
+            if (m_IsCrouch)
+            {
+                m_CharacterController.height = 1.0f;
+                speed /= 2;
+            }
+            else
+            {
+                m_CharacterController.height = 1.8f;
+            }
+
+            /* /Crouch */
             m_Input = new Vector2(horizontal, vertical);
 
             // normalize input if it exceeds 1 in combined length:
@@ -255,5 +271,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
+
+        // Controllo se il personaggio è in posizione di crouch
+        public bool isCrouch()
+        {
+            return m_IsCrouch;
+        }
+
     }
 }

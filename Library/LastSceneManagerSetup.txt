@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Terra/Razzo Fase 3.unity
+- path: Assets/Terra/Terra1.unity
   isLoaded: 1
   isActive: 1

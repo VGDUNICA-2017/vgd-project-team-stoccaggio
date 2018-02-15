@@ -177,6 +177,8 @@
     <Compile Include="Assets\Terra\Standard Assets\Editor\Water\Water4\WaterEditorUtility.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Shaders\OutlineDiffuse.shader" />
+    <None Include="Assets\TODO.txt" />
     <None Include="Assets\Terra\LowPolyWater_Pack\LowPoly Island\Credits.txt" />
     <None Include="Assets\Terra\LowPolyWater_Pack\Shaders\WaterShaded.shader" />
     <None Include="Assets\Terra\SampleScenes\Shaders\Skybox-Procedural.shader" />
