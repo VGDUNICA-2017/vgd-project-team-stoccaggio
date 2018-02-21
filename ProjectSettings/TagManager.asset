@@ -8,6 +8,10 @@ TagManager:
   - player
   - GameUI
   - checkpoint
+  - LoadingSlider
+  - playerUI
+  - vapore
+  - SceneController
   layers:
   - Default
   - TransparentFX
