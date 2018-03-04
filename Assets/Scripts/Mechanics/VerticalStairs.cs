@@ -22,7 +22,7 @@ public class VerticalStairs : MonoBehaviour {
         playerCollider = player.GetComponent<CapsuleCollider>();
 
         // posizione di discesa/salita
-        lockPosition = transform.TransformPoint(new Vector3(-0.5f, 0.0f, 0.0f));
+        lockPosition = transform.TransformPoint(Vector3.zero);
         lockPosition = Vector3.MoveTowards(lockPosition, transform.forward, playerCollider.radius + 0.4f);
 
         // evento azione
@@ -55,6 +55,6 @@ public class VerticalStairs : MonoBehaviour {
         }
 
         // posizione di lock
-        //Debug.DrawLine(new Vector3(lockPosition.x, player.transform.position.y + 0.015f, lockPosition.z), Vector3.up * 1000, Color.magenta);
+        Debug.DrawLine(new Vector3(lockPosition.x, player.transform.position.y + 0.015f, lockPosition.z), Vector3.up * 1000, Color.magenta);
     }
 }

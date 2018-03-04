@@ -16,6 +16,9 @@ public class SceneController : MonoBehaviour {
     // shortcut
     public static SceneController CurrentScene = null;
 
+    // countdowns
+    public Dictionary<string, Countdown> countdowns = new Dictionary<string, Countdown>();
+
     private void Awake()
     {
         // aggiornamento shortcut
@@ -26,6 +29,26 @@ public class SceneController : MonoBehaviour {
     {
         // gameController
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+
+        // entry transition
+        playerUI.CloseTransition();
+    }
+
+    private void Update()
+    {
+        updateCountdowns();
+    }
+
+    #region Texts
+
+    public void Notification(string message)
+    {
+        playerUI.ConversationMsg(message, 4);
+    }
+
+    public void SpeakToSelf(string message)
+    {
+        playerUI.ConversationMsg("* " + message + " *", 4);
     }
 
     public void NpcSpeak(string npcName, string message)
@@ -33,6 +56,7 @@ public class SceneController : MonoBehaviour {
         playerUI.ConversationMsg("[" + npcName + "] " + message, 4);
     }
 
+    #endregion
 
     #region Equip
 
@@ -44,6 +68,12 @@ public class SceneController : MonoBehaviour {
     public void AddItem(Item item)
     {
         playerEquip.AddItem(item);
+        playerUI.RefreshInventory(playerEquip);
+    }
+
+    public void RemoveItem(string itemName)
+    {
+        playerEquip.RemoveItem(itemName);
         playerUI.RefreshInventory(playerEquip);
     }
 
@@ -59,10 +89,38 @@ public class SceneController : MonoBehaviour {
         playerUI.RefreshInventory(playerEquip);
     }
 
+    public bool HasItem(string itemName)
+    {
+        return playerEquip.Contains(itemName);
+    }
+
+    #endregion
+
+    #region Countdowns
+
+    private void updateCountdowns()
+    {
+        foreach(KeyValuePair<string, Countdown> cd in countdowns)
+            cd.Value.Update(Time.deltaTime);
+    }
+
+    public void SetUITimer(string timerName)
+    {
+        playerUI.CountdownSet(countdowns[timerName]);
+    }
+
+    public void ClearUITimer()
+    {
+        playerUI.CountdownReset();
+    }
+
     #endregion
 
     public void GameOver()
     {
-        gameController.LoadScene("Scenes/Terra");
+        playerUI.OpenTransition(() =>
+        {
+            gameController.LoadScene("Scenes/Terra");
+        });
     }
 }

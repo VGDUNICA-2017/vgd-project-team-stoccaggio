@@ -16,6 +16,7 @@ public class Pointer : MonoBehaviour {
     void Update()
     {
         // raycast dal centro della telecamera al resto del mondo
+        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward);
         if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out rayHit, maxDistance))
         {
             // nuovo oggetto puntato

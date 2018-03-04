@@ -17,26 +17,50 @@ public class PlayerUI : MonoBehaviour {
     public Text actionText;
     public Text actionSubtext;
 
-    public Text conversationText;
+    public GameObject dialogsBox;
+    public GameObject dialogLinePrefab;
 
+    // countdown
+    public Text countdownText;
+
+    // exit menu
     public GameObject exitMenu;
 
-    // inventario
+    // modal panel
+    public GameObject modalPanel;
+    public Text modalText;
+
+    // transition
+    public GameObject transitionPanel;
+    public delegate void OnTransitionEnd();
+
+    // dialog
+    private VerticalLayoutGroup dialogVlayout;
+
+    // items
     private List<GameObject> itemsGameObjects = new List<GameObject>();
 
-    // covnersation
-    private Coroutine conversationCoroutine;
+    // timer
+    private Countdown countdown = null;
+
+    // missions
+    private Dictionary<string, GameObject> missions = new Dictionary<string, GameObject>();
 
     void Start()
     {
+        // inizializzazione dialogsBox
+        dialogVlayout = dialogsBox.GetComponent<VerticalLayoutGroup>();
+
         // inizializzazione exit menu
         exitMenuSetup();
     }
 
-    private void Update()
+    void Update()
     {
         exitMenuController();
+        modalPanelController();
         equipController();
+        countdownUpdate();
     }
 
     #region Exit Menu
@@ -105,6 +129,22 @@ public class PlayerUI : MonoBehaviour {
 
     #endregion
 
+    #region Modal Panel
+
+    public void ActiveteModal(string richText)
+    {
+        modalText.text = richText;
+        modalPanel.SetActive(true);
+    }
+
+    private void modalPanelController()
+    {
+        if(modalPanel.activeSelf && Input.GetKeyDown(KeyCode.E))
+            modalPanel.SetActive(false);
+    }
+
+    #endregion
+
     #region Equip
 
     private void loadItemDetails(GameObject itemGameObject, Item item)
@@ -161,33 +201,97 @@ public class PlayerUI : MonoBehaviour {
             actionSubtext.text = subtext;
     }
 
-    #region Conversation
+    #region Dialog
 
     public void ConversationMsg(string message)
     {
-        // aggiorna il testo
-        conversationText.text = message;
-
-        // ferma l'eventuale coroutine precedente
-        if (conversationCoroutine != null)
-            StopCoroutine(conversationCoroutine);
+        // aggiunge il testo
+        GameObject newText = Instantiate(dialogLinePrefab, dialogsBox.transform);
     }
     public void ConversationMsg(string message, int durationInSeconds)
     {
-        // aggiorna il testo
-        conversationText.text = message;
-
-        // ferma l'eventuale coroutine precedente
-        if (conversationCoroutine != null)
-            StopCoroutine(conversationCoroutine);
+        // aggiunge il testo
+        GameObject newText = Instantiate(dialogLinePrefab, dialogsBox.transform);
+        newText.GetComponent<Text>().text = message;
 
         // coroutine per la pulizia del testo
-        conversationCoroutine = StartCoroutine(conversationClear(durationInSeconds));
+        StartCoroutine(dialogClear(newText, durationInSeconds));
     }
-    private IEnumerator conversationClear(int durationInSeconds)
+    private IEnumerator dialogClear(GameObject textToClear, int durationInSeconds)
     {
         yield return new WaitForSecondsRealtime(durationInSeconds);
-        conversationText.text = "";
+        Destroy(textToClear);
+    }
+
+    #endregion
+
+    #region Timer
+
+    private void countdownUpdate()
+    {
+        if(countdown != null)
+            countdownText.text = countdown.NiceString();
+    }
+
+    public void CountdownSet(Countdown countdown)
+    {
+        this.countdown = countdown;
+    }
+
+    public void CountdownReset()
+    {
+        countdown = null;
+        countdownText.text = "";
+    }
+
+    #endregion
+
+    #region Missions
+
+    private void loadMissionDetails(GameObject missionGameObject, string title, string description)
+    {
+        missionGameObject.transform.Find("Title").GetComponent<Text>().text = title;
+        missionGameObject.transform.Find("Description").GetComponent<Text>().text = description;
+    }
+
+    public void AddMission(string id, string title, string description)
+    {
+        GameObject newMission = Instantiate(missionPrefab, missionsPanel.transform);
+        loadMissionDetails(newMission, title, description);
+        missions.Add(id, newMission);
+    }
+
+    #endregion
+
+    #region Transition
+
+    public void OpenTransition()
+    {
+        transitionPanel.GetComponent<Animation>().Play("openTransition");
+    }
+
+    public void OpenTransition(OnTransitionEnd onTransitionEnd)
+    {
+        OpenTransition();
+        StartCoroutine(transitionEndHandler(onTransitionEnd));
+    }
+
+    public void CloseTransition()
+    {
+        transitionPanel.GetComponent<Animation>().Play("closeTransition");
+    }
+
+    public void CloseTransition(OnTransitionEnd onTransitionEnd)
+    {
+        CloseTransition();
+        StartCoroutine(transitionEndHandler(onTransitionEnd));
+    }
+
+    private IEnumerator transitionEndHandler(OnTransitionEnd onTransitionEnd)
+    {
+        yield return new WaitForSecondsRealtime(4);
+
+        onTransitionEnd();
     }
 
     #endregion

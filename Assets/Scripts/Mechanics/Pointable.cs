@@ -23,8 +23,8 @@ public class Pointable : MonoBehaviour {
     private void Start()
     {
         // inizializzazione shader
-        mat = GetComponent<Renderer>().material;
-        originalShader = mat.shader;
+        /*mat = GetComponent<Renderer>().material;
+        originalShader = mat.shader;*/
     }
 
     private void Update()
@@ -38,11 +38,11 @@ public class Pointable : MonoBehaviour {
         isPointed = true;
 
         // aggiorna lo shader
-        if (pointedShader != null)
-            mat.shader = pointedShader;
+        /*if (pointedShader != null)
+            mat.shader = pointedShader;*/
 
         // aggiorna il testo
-        SceneController.CurrentScene.playerUI.ActionText(pointedText, pointedSubText);
+        RefreshText(pointedText, pointedSubText);
     }
 
     public void PointOutEvent()
@@ -50,10 +50,20 @@ public class Pointable : MonoBehaviour {
         isPointed = false;
 
         // aggiorna lo shader
-        if (pointedShader != null)
-            mat.shader = originalShader;
+        /*if (pointedShader != null)
+            mat.shader = originalShader;*/
 
         // aggiorna il testo
-        SceneController.CurrentScene.playerUI.ActionText("", "");
+        RefreshText("", "");
+    }
+
+    public void RefreshText(string pointedText, string pointedSubText)
+    {
+        SceneController.CurrentScene.playerUI.ActionText(pointedText, pointedSubText);
+    }
+
+    public void RefreshText()
+    {
+        SceneController.CurrentScene.playerUI.ActionText(pointedText, pointedSubText);
     }
 }

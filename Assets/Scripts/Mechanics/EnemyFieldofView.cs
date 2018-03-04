@@ -19,9 +19,10 @@ public class EnemyFieldofView : MonoBehaviour
     private Vector3 playerHead;
 
     // allarme
-    private bool trigger;  //Si attiva se vieni avvistato
-    private bool fixTrigger; //Diventa true una volta che il player viene cassato
-
+    private float alertTimeout;
+    private bool playerSeen;
+    private bool playerCaught;
+    public float alertTime = 4.0f;
     public GameObject allarmPoint;
 
     void Start()
@@ -31,8 +32,8 @@ public class EnemyFieldofView : MonoBehaviour
 
         cl = GetComponent<CapsuleCollider>();
 
-        trigger = false;
-        fixTrigger = true;
+        playerSeen = false;
+        playerCaught = false;
     }
 
     private void FixedUpdate()
@@ -54,31 +55,49 @@ public class EnemyFieldofView : MonoBehaviour
                 // controlla l'angolo
                 if (Vector3.Angle(transform.forward, playerHead - sourceEye) < angleVisual / 2.0f)
                 {
-                    if(trigger && fixTrigger) //Se il player è stato già avvistato e non ancora cassato
+                    if (!playerSeen)
                     {
-                        fixTrigger = false;
-                        StartCoroutine(Cassato());
+                        // avvistato per la prima volta
+                        playerSeen = true;
+                        alertTimeout = Time.time + alertTime;
+                        allarmPoint.gameObject.SetActive(true);
+                        SceneController.CurrentScene.NpcSpeak(npcName, "Mi è sembrato di vedere qualcosa...");
                     }
                     else
                     {
-                        if (fixTrigger) //Se il player non è stato ancora cassato
+                        // il player è stato già avvistato
+                        if (playerSeen && !playerCaught)
                         {
-                            allarmPoint.gameObject.SetActive(true);
-                            StartCoroutine(Avvistato());
+                            // controlla che non sia stato beccato
+                            if(Time.time >= alertTimeout)
+                            {
+                                // beccato!
+                                playerCaught = true;
+                                SceneController.CurrentScene.NpcSpeak(npcName, "Allarme! C'e' un intruso! Chiamate le guardie!");
+                                StartCoroutine(catchPlayer());
+                            }
                         }
                     }
-                    
                 }
-                else //Se il player non è più sotto la visuale dell'NPC
+                else
                 {
-                    if(trigger) //Se il player era stato avvistato
+                    // player non più sotto la visuale dell'NPC
+                    if (playerSeen)
                     {
-                        trigger = false;
-                        allarmPoint.gameObject.SetActive(trigger);
+                        // il player era stato avvistato
+                        playerSeen = false;
+                        allarmPoint.gameObject.SetActive(false);
                     }
                 }
             }
         }
+    }
+
+    private IEnumerator catchPlayer()
+    {
+        yield return new WaitForSecondsRealtime(4);
+
+        SceneController.CurrentScene.GameOver();
     }
 
     void OnDrawGizmosSelected()
@@ -86,21 +105,5 @@ public class EnemyFieldofView : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(sourceEye, maxDistanceView);
         Gizmos.DrawRay(sourceEye, playerHead - sourceEye);
-    }
-
-    private IEnumerator Cassato()
-    {
-        SceneController.CurrentScene.NpcSpeak(npcName, "Allarme! C'e' un intruso! Chiamate le guardie!");
-        yield return new WaitForSecondsRealtime(4);
-
-        SceneController.CurrentScene.GameOver();
-    }
-
-    private IEnumerator Avvistato()
-    {
-        SceneController.CurrentScene.NpcSpeak(npcName, "Mi è sembrato di vedere qualcosa...");
-        yield return new WaitForSecondsRealtime(2);
-        
-        trigger = true; //Setto a true per indicare che il player è stato avvistato
     }
 }

@@ -90,4 +90,13 @@ public class Equipment
 
         return orderedList;
     }
+
+    public bool Contains(string name)
+    {
+        for (int i = 0; i < itemList.Count; i++)
+            if (itemList[i].Name == name)
+                return true;
+
+        return false;
+    }
 }

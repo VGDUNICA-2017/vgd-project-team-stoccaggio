@@ -5,6 +5,7 @@ using UnityEngine;
 public class DoorController : MonoBehaviour {
 
     public bool isOpen;
+    public bool isLocked;
 
     private Pointable pointable;
     private Animator animator;
@@ -18,35 +19,52 @@ public class DoorController : MonoBehaviour {
         animator = GetComponent<Animator>();
 
         // inizializzazione
-        if (isOpen)
-            pointable.pointedText = "[F] Chiudi";
-        else
-            pointable.pointedText = "[F] Apri";
+        SetLock(isLocked);
 
         // evento azione
         pointable.ActionHandler += new Pointable.ActionEventHandler(() =>
         {
-            controller(isOpen, true);
-            isOpen = !isOpen;
+            if (!isLocked)
+            {
+                controller(isOpen);
+                isOpen = !isOpen;
+            }
+            else
+            {
+                pointable.pointedText = "Bloccata";
+            }
         });
     }
 
-    private void controller(bool isActive, bool withAudio)
+    private void controller(bool isActive)
     {
         // animazione
         if (!isActive)
         {
             animator.SetTrigger("Open");
             pointable.pointedText = "[F] Chiudi";
+            pointable.RefreshText();
         }
         else
         {
             animator.SetTrigger("Close");
             pointable.pointedText = "[F] Apri";
+            pointable.RefreshText();
         }
 
         // audio apertura/chiusura
-        if(withAudio)
-            audioSource.Play();
+        audioSource.Play();
+    }
+
+    public void SetLock(bool locked)
+    {
+        isLocked = locked;
+
+        if (isLocked)
+            pointable.pointedText = "Bloccata";
+        else if (isOpen)
+            pointable.pointedText = "[F] Chiudi";
+        else
+            pointable.pointedText = "[F] Apri";
     }
 }

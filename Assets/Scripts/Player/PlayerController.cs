@@ -66,10 +66,10 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        //if(PlayerPrefs.GetString("Scena") != null && PlayerPrefs.GetString("Scena") != "Terra1"  && PlayerPrefs.GetFloat("x") != 0 && PlayerPrefs.GetFloat("y") != 0 && PlayerPrefs.GetFloat("z") != 0)
-        //{            
-        //    transform.position = new Vector3(PlayerPrefs.GetFloat("x"), PlayerPrefs.GetFloat("y"), PlayerPrefs.GetFloat("z"));
-        //}
+        /*if(PlayerPrefs.GetString("Scena") != null && PlayerPrefs.GetString("Scena") != "Terra1"  && PlayerPrefs.GetFloat("x") != 0 && PlayerPrefs.GetFloat("y") != 0 && PlayerPrefs.GetFloat("z") != 0)
+        {            
+            transform.position = new Vector3(PlayerPrefs.GetFloat("x"), PlayerPrefs.GetFloat("y"), PlayerPrefs.GetFloat("z"));
+        }*/
     }
 
     private void Update()
