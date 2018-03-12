@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
+    public static GameController CurrentController;
+
+    public GameSaveData gameSaveData;
+
     #region Caricamento scene
 
     public void LoadScene(string scenePath)
@@ -53,6 +57,7 @@ public class GameController : MonoBehaviour {
     // rende il gameObject permanente
     void Awake()
     {
+        CurrentController = this;
         DontDestroyOnLoad(transform.gameObject);
     }
 }

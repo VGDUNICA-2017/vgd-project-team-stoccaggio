@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class VerticalStairs : MonoBehaviour {
 
+    public bool invertLockDirection = false;
+
     // componenti
     private GameObject player;
     private CapsuleCollider playerCollider;
@@ -22,21 +24,23 @@ public class VerticalStairs : MonoBehaviour {
         playerCollider = player.GetComponent<CapsuleCollider>();
 
         // posizione di discesa/salita
-        lockPosition = transform.TransformPoint(Vector3.zero);
-        lockPosition = Vector3.MoveTowards(lockPosition, transform.forward, playerCollider.radius + 0.4f);
-
+        if(invertLockDirection)
+            lockPosition = transform.TransformPoint(GetComponent<BoxCollider>().center + (playerCollider.radius + 0.4f) * - Vector3.back);
+        else
+            lockPosition = transform.TransformPoint(GetComponent<BoxCollider>().center + (playerCollider.radius + 0.4f) * Vector3.back);
+        
         // evento azione
         GetComponent<Pointable>().ActionHandler += new Pointable.ActionEventHandler(() =>
         {
-            playerController.ToggleClimbing();
+            playerController.ToggleClimbing(transform.gameObject);
             player.transform.position = new Vector3(lockPosition.x, player.transform.position.y + 0.015f, lockPosition.z);
         });
     }
 
     private void Update()
     {
-        //verifica dei limiti su y della scalata
-        if (playerController.isClimbing)
+        // verifica dei limiti su y della scalata
+        if (playerController.isClimbing && playerController.ClimbedObject() == transform.gameObject)
         {
             // calcolo della base del giocatore
             Vector3 playerBase = player.transform.position - Vector3.up * (playerCollider.height / 2.0f);
@@ -49,7 +53,7 @@ public class VerticalStairs : MonoBehaviour {
             if(!Physics.Raycast(playerBase, dir, out rayHit) ||
                 rayHit.transform.gameObject != this.gameObject)
             {
-                playerController.ToggleClimbing();
+                playerController.ToggleClimbing(transform.gameObject);
             }
             Debug.DrawRay(playerBase, dir, Color.magenta);
         }

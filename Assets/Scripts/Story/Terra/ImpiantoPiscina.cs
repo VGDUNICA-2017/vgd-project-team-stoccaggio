@@ -37,14 +37,14 @@ public class ImpiantoPiscina : MonoBehaviour {
             pointable.pointedSubText = "diminuisci la temperatura";
             pointable.RefreshText();
             vaporeon.GetComponent<ParticleSystem>().Play();
-            npc.GetComponent<EnemyFieldofView>().maxDistanceView /= 2f;
+            npc.GetComponent<EnemySense>().maxDistanceView /= 2f;
         }
         else
         {
             pointable.pointedSubText = "aumenta la temperatura";
             pointable.RefreshText();
             vaporeon.GetComponent<ParticleSystem>().Stop();
-            npc.GetComponent<EnemyFieldofView>().maxDistanceView *= 2f;
+            npc.GetComponent<EnemySense>().maxDistanceView *= 2f;
         }
     }
 }

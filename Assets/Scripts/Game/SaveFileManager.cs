@@ -4,12 +4,12 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class SaveFileManager {
+public static class SaveFileManager {
 
-    private const string saveFileName = "gamesave.dat";
+    private static string saveFileName = "gamesave.dat";
 
     // salvataggio dei dati di gioco su file
-    public void Save(GameSaveData gsData)
+    public static void Save(GameSaveData gsData)
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/" + saveFileName);
@@ -18,7 +18,7 @@ public class SaveFileManager {
     }
 
     // caricamento del salvataggio da file
-    public GameSaveData Load()
+    public static GameSaveData Load()
     {
         GameSaveData gsData = null;
 

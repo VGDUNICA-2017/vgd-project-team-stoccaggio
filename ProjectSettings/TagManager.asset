@@ -12,6 +12,7 @@ TagManager:
   - playerUI
   - vapore
   - SceneController
+  - Light
   layers:
   - Default
   - TransparentFX

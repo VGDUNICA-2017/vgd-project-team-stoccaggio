@@ -1,20 +1,16 @@
 
 // Terra
-
-interruttore docce
 sistemare pavimento piscina
 aggiungere props in piscina
-led di notifica accensione nei macchinari hangar
-script raccolta acqua
-script abbassamento luci
-script acqua sul server con incendio
+
+script luci di emergenza su tutta la mappa
+
 script botola di fine capitolo
+
+mettere il montacarichi
 
 // Fase 1
 porte ascensore
 finestre
 scale
 props
-
-// UI
-lettura note

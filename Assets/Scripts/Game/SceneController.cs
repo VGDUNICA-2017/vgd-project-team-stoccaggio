@@ -6,29 +6,36 @@ public class SceneController : MonoBehaviour {
 
     // impostazione della scena
     public PlayerUI playerUI;
+    public GameObject player;
+
+    // checkpoints
+    public GameObject[] checkPoints;
 
     // personaggio
     private Equipment playerEquip = new Equipment();
 
-    // supporto
-    private GameController gameController;
-
-    // shortcut
+    // shortcuts
     public static SceneController CurrentScene = null;
+    public static GameObject CurrentGameObject = null;
 
     // countdowns
     public Dictionary<string, Countdown> countdowns = new Dictionary<string, Countdown>();
+    private string currentUITimer = null;
 
     private void Awake()
     {
         // aggiornamento shortcut
         CurrentScene = this;
+        CurrentGameObject = transform.gameObject;
     }
 
     private void Start()
     {
-        // gameController
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        // gestione salvataggio
+        int currentCheckpointID = (GameController.CurrentController.gameSaveData == null) ? 0 : GameController.CurrentController.gameSaveData.currentCheckpointID;
+
+        // posizionamento player
+        player.transform.position = checkPoints[currentCheckpointID].transform.position;
 
         // entry transition
         playerUI.CloseTransition();
@@ -39,11 +46,20 @@ public class SceneController : MonoBehaviour {
         updateCountdowns();
     }
 
+    #region Camera
+
+    public CameraShake GetCameraShake()
+    {
+        return GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraShake>();
+    }
+
+    #endregion
+
     #region Texts
 
-    public void Notification(string message)
+    public void Notification(string message,int duration)
     {
-        playerUI.ConversationMsg(message, 4);
+        playerUI.ConversationMsg(message, duration);
     }
 
     public void SpeakToSelf(string message)
@@ -54,6 +70,16 @@ public class SceneController : MonoBehaviour {
     public void NpcSpeak(string npcName, string message)
     {
         playerUI.ConversationMsg("[" + npcName + "] " + message, 4);
+    }
+
+    public void NpcSpeak(string npcName, string message, int duration)
+    {
+        playerUI.ConversationMsg("[" + npcName + "] " + message, duration);
+    }
+
+    public void NpcSpeak(string npcName, string message, int duration, int delay)
+    {
+        playerUI.ConversationMsg("[" + npcName + "] " + message, duration, delay);
     }
 
     #endregion
@@ -94,6 +120,11 @@ public class SceneController : MonoBehaviour {
         return playerEquip.Contains(itemName);
     }
 
+    public bool IsEquipped(string itemName)
+    {
+        return playerEquip.CurrentItem().Name == itemName;
+    }
+
     #endregion
 
     #region Countdowns
@@ -106,12 +137,14 @@ public class SceneController : MonoBehaviour {
 
     public void SetUITimer(string timerName)
     {
+        currentUITimer = timerName;
         playerUI.CountdownSet(countdowns[timerName]);
     }
 
-    public void ClearUITimer()
+    public void ClearUITimer(string timerName)
     {
-        playerUI.CountdownReset();
+        if(currentUITimer == timerName)
+            playerUI.CountdownReset();
     }
 
     #endregion
@@ -120,7 +153,7 @@ public class SceneController : MonoBehaviour {
     {
         playerUI.OpenTransition(() =>
         {
-            gameController.LoadScene("Scenes/Terra");
+            GameController.CurrentController.LoadScene("Scenes/Terra");
         });
     }
 }

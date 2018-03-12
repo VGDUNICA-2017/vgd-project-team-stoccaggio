@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private bool isRunning;
     private bool isCrouch;
     public bool isClimbing;
+    private GameObject climbedObject = null;
 
     private bool isGrounded;
     private RaycastHit groundHit;
@@ -65,14 +66,9 @@ public class PlayerController : MonoBehaviour
         // nascondi il cursore
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
-        /*if(PlayerPrefs.GetString("Scena") != null && PlayerPrefs.GetString("Scena") != "Terra1"  && PlayerPrefs.GetFloat("x") != 0 && PlayerPrefs.GetFloat("y") != 0 && PlayerPrefs.GetFloat("z") != 0)
-        {            
-            transform.position = new Vector3(PlayerPrefs.GetFloat("x"), PlayerPrefs.GetFloat("y"), PlayerPrefs.GetFloat("z"));
-        }*/
     }
 
-    private void Update()
+    void Update()
     {
         // lettura input ed aggiornamento stato se il gioco non è in pausa
         if(Time.timeScale != 0)
@@ -85,7 +81,6 @@ public class PlayerController : MonoBehaviour
             // rotazione
             Rotate();
         }
-
     }
 
     private void GetInput()
@@ -217,8 +212,18 @@ public class PlayerController : MonoBehaviour
         rb.MoveRotation(Quaternion.AngleAxis(lookVector.x, transform.up));
     }
 
-    public void ToggleClimbing()
+    public void ToggleClimbing(GameObject climbedObject)
     {
         isClimbing = !isClimbing;
+
+        if (isClimbing)
+            this.climbedObject = climbedObject;
+        else if(this.climbedObject == climbedObject)
+            this.climbedObject = null;
+    }
+
+    public GameObject ClimbedObject()
+    {
+        return climbedObject;
     }
 }

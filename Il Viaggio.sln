@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Il Viaggio.Plugins", "Il Viaggio.Plugins.csproj", "{38985397-B0AE-A994-E764-7EC8240798E1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Il Viaggio", "Il Viaggio.csproj", "{9399D7E7-CE5D-79F1-62B4-50A5E4FDA839}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Il Viaggio.Plugins", "Il Viaggio.Plugins.csproj", "{38985397-B0AE-A994-E764-7EC8240798E1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Il Viaggio.Editor.Plugins", "Il Viaggio.Editor.Plugins.csproj", "{C9CE9410-B50B-33ED-BE60-BCC7FCC98E39}"
 EndProject
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{38985397-B0AE-A994-E764-7EC8240798E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38985397-B0AE-A994-E764-7EC8240798E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38985397-B0AE-A994-E764-7EC8240798E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38985397-B0AE-A994-E764-7EC8240798E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9399D7E7-CE5D-79F1-62B4-50A5E4FDA839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9399D7E7-CE5D-79F1-62B4-50A5E4FDA839}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9399D7E7-CE5D-79F1-62B4-50A5E4FDA839}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9399D7E7-CE5D-79F1-62B4-50A5E4FDA839}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38985397-B0AE-A994-E764-7EC8240798E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38985397-B0AE-A994-E764-7EC8240798E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38985397-B0AE-A994-E764-7EC8240798E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38985397-B0AE-A994-E764-7EC8240798E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9CE9410-B50B-33ED-BE60-BCC7FCC98E39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9CE9410-B50B-33ED-BE60-BCC7FCC98E39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9CE9410-B50B-33ED-BE60-BCC7FCC98E39}.Release|Any CPU.ActiveCfg = Release|Any CPU

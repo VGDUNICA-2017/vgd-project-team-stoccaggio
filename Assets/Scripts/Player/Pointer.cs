@@ -7,6 +7,7 @@ public class Pointer : MonoBehaviour {
     // variabili
     public Camera playerCamera;
     public float maxDistance = 2.0f;
+    public float startDistance = 0.3f;
 
     // supporto
     private RaycastHit rayHit;
@@ -16,8 +17,8 @@ public class Pointer : MonoBehaviour {
     void Update()
     {
         // raycast dal centro della telecamera al resto del mondo
-        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward);
-        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out rayHit, maxDistance))
+        Debug.DrawRay(playerCamera.transform.position + startDistance * playerCamera.transform.forward, playerCamera.transform.forward);
+        if (Physics.Raycast(playerCamera.transform.position + startDistance * playerCamera.transform.forward, playerCamera.transform.forward, out rayHit, maxDistance))
         {
             // nuovo oggetto puntato
             if (pointedObject != rayHit.transform.gameObject)

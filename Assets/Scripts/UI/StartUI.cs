@@ -10,35 +10,31 @@ public class StartUI : MonoBehaviour {
     public Button startButton;
     public Button exitButton;
 
+    private GameSaveData gameSaveData;
+    
     void Start () {
 
+        // carica i dati del salvataggio corrente
+        gameSaveData = SaveFileManager.Load();
+
         // nascondi pulsanti carica se non ci sono salvataggi
-        if(PlayerPrefs.GetString("Scena") == null)
+        if(gameSaveData == null)
             continueButton.gameObject.SetActive(false);
 
         // caricamento partita
-        continueButton.onClick.AddListener(() =>
-        {
-            SceneManager.LoadScene(
-                PlayerPrefs.GetString("Scena")
-            );
+        continueButton.onClick.AddListener(() => {
+            GameController.CurrentController.gameSaveData = gameSaveData;
+            SceneManager.LoadScene(gameSaveData.currentScenePath);
         });
 
         // nuova partita
-        startButton.onClick.AddListener(() =>
-        {
-
-            PlayerPrefs.SetString("Scena", "Scenas/Terra");
-            PlayerPrefs.SetFloat("x", 474.0f);
-            PlayerPrefs.SetFloat("y", 68.0f);
-            PlayerPrefs.SetFloat("z", 322.0f);
-
-            GameObject.FindWithTag("GameController").GetComponent<GameController>().LoadScene("Scenes/Terra");
+        startButton.onClick.AddListener(() => {
+            GameController.CurrentController.gameSaveData = null;
+            GameController.CurrentController.LoadScene("Scenes/Terra");
         });
 
         // uscita dal gioco
-        exitButton.onClick.AddListener(() =>
-        {
+        exitButton.onClick.AddListener(() => {
             Application.Quit();
         });
     }

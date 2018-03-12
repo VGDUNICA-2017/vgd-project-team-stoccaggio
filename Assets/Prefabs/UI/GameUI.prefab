@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 224823288021610146}
   - component: {fileID: 222797738067367346}
   - component: {fileID: 114751506235531652}
+  - component: {fileID: 114195228259474142}
   m_Layer: 5
   m_Name: ActionSubText
   m_TagString: Untagged
@@ -364,6 +365,7 @@ GameObject:
   - component: {fileID: 224136100596386388}
   - component: {fileID: 222805886874912030}
   - component: {fileID: 114336159221896574}
+  - component: {fileID: 114165366332454378}
   m_Layer: 5
   m_Name: ActionText
   m_TagString: Untagged
@@ -697,6 +699,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114165366332454378
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1794288873665114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.0627451, g: 0.24313726, b: 0.3137255, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114166968370532584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -745,6 +761,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114195228259474142
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1467970052757760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.0627451, g: 0.24313726, b: 0.3137255, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114207477405613196
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1238,7 +1268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.0627451, g: 0.24313726, b: 0.3137255, a: 1}
+  m_Color: {r: 0.1254902, g: 0.5058824, b: 0.62352943, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1248,7 +1278,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: 8d96424999252774f865b95269e381da, type: 3}
     m_FontSize: 24
-    m_FontStyle: 0
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40

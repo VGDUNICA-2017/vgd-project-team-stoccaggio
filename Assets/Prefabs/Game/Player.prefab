@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 54420700535985900}
   - component: {fileID: 114556223506046772}
   - component: {fileID: 114426403233686948}
-  - component: {fileID: 114074578047699698}
   m_Layer: 0
   m_Name: Player
   m_TagString: player
@@ -43,6 +42,7 @@ GameObject:
   - component: {fileID: 92545710060151148}
   - component: {fileID: 124189250513040228}
   - component: {fileID: 81960948037911690}
+  - component: {fileID: 114383442239609582}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -142,18 +142,18 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1851133617897138}
   m_Enabled: 1
---- !u!114 &114074578047699698
+--- !u!114 &114383442239609582
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1680287290298550}
+  m_GameObject: {fileID: 1851133617897138}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91f1d196a9c2dd94c9d3311fd1db0da1, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b92e44d65cd3a7408022c00581ec8a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lastCheckpoint: {fileID: 0}
+  amplitude: 0.1
 --- !u!114 &114426403233686948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,7 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 20288710276501246}
-  maxDistance: 5
+  maxDistance: 4
+  startDistance: 0.4
 --- !u!114 &114556223506046772
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -184,7 +185,7 @@ MonoBehaviour:
   runSpeed: 10
   crouchSpeedMultiplier: 0.5
   crouchHeightMultiplier: 0.4
-  viewSensitivity: 40
+  viewSensitivity: 60
   smoothView: 0.1
   viewAngle: 40
   walkSound: 1

@@ -7,10 +7,8 @@ public class SetCentrifuga : MonoBehaviour {
     public GameObject centrifuga;
     //public GameObject doorLeft;
     //public GameObject doorRight;
-    public Animator doorLeft;
-    public Animator doorRight;
 
-    private bool active;
+    private bool isPowered;
 
     private Pointable pointable;
 
@@ -19,49 +17,36 @@ public class SetCentrifuga : MonoBehaviour {
         // componente pointable
         pointable = GetComponent<Pointable>();
 
-
-        active = false;
-        pointable.pointedSubText = "[F] Disattiva la corrente";
+        // inizializzazione
+        isPowered = false;
+        pointable.pointedSubText = "[F] Attiva la centrifuga";
 
         // evento azione
         pointable.ActionHandler += new Pointable.ActionEventHandler(() =>
         {
-            
-                active = !active;
-                Controller(active);
-            
-            
+            if (!isPowered)
+            {
+                isPowered = true;
+
+                // disattiva interazione
+                pointable.pointedSubText = "Corrente disattivata";
+                pointable.RefreshText();
+
+                // accende la centrifuga
+                centrifuga.gameObject.GetComponent<Animator>().SetTrigger("On");
+
+                // disattiva la corrente
+                SceneController.CurrentGameObject.GetComponent<Terra>().ElectricPowerOff();
+            }
         });
 
-    }
-
-    // setta l'animazione delle particelle a seconda che l'impianto sia acceso o spento
-    void Controller(bool value)
-    {
-        if (value)
+        // effetto del backup della corrente
+        SceneController.CurrentScene.countdowns["power"].ExpirationHandler += new Countdown.ExpiretionEventHandler(() =>
         {
-            pointable.pointedSubText = "Corrente disattivata";
-            pointable.RefreshText();
-            //disattiva corrente
-            centrifuga.gameObject.GetComponent<Animator>().StartPlayback();
-            // Apre la porta nel corridoio
-            doorLeft.SetTrigger("Open"); 
-            doorRight.SetTrigger("Open");
-
-            SceneController.CurrentScene.NpcSpeak("Guardia", "E' mancata la corrente, avviate il ripristino");
-            SceneController.CurrentScene.countdowns.Add("power", new Countdown());
-            SceneController.CurrentScene.countdowns["power"].Set(10);
-            SceneController.CurrentScene.countdowns["power"].ExpirationHandler += new Countdown.ExpiretionEventHandler(() =>
-            {
-                //Riattiva la corrente
-                centrifuga.gameObject.GetComponent<Animator>().StopPlayback();
-                active = !active;
-                pointable.pointedSubText = "[F] Disattiva la corrente";
-                SceneController.CurrentScene.SpeakToSelf("Hanno ripristinato la corrente!");
-                //Chiude la porta del corridoio
-                doorLeft.SetTrigger("Close");
-                doorRight.SetTrigger("Close");
-            });
-        }
+            // spegne la centrifuga
+            isPowered = false;
+            centrifuga.gameObject.GetComponent<Animator>().SetTrigger("Off");
+            pointable.pointedSubText = "[F] Attiva la centrifuga";
+        });
     }
 }

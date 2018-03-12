@@ -34,9 +34,6 @@ public class PlayerUI : MonoBehaviour {
     public GameObject transitionPanel;
     public delegate void OnTransitionEnd();
 
-    // dialog
-    private VerticalLayoutGroup dialogVlayout;
-
     // items
     private List<GameObject> itemsGameObjects = new List<GameObject>();
 
@@ -48,9 +45,6 @@ public class PlayerUI : MonoBehaviour {
 
     void Start()
     {
-        // inizializzazione dialogsBox
-        dialogVlayout = dialogsBox.GetComponent<VerticalLayoutGroup>();
-
         // inizializzazione exit menu
         exitMenuSetup();
     }
@@ -131,7 +125,7 @@ public class PlayerUI : MonoBehaviour {
 
     #region Modal Panel
 
-    public void ActiveteModal(string richText)
+    public void ActivateModal(string richText)
     {
         modalText.text = richText;
         modalPanel.SetActive(true);
@@ -193,6 +187,8 @@ public class PlayerUI : MonoBehaviour {
 
     #endregion
 
+    #region ActionText
+
     public void ActionText(string text, string subtext)
     {
         if (text != null)
@@ -201,13 +197,16 @@ public class PlayerUI : MonoBehaviour {
             actionSubtext.text = subtext;
     }
 
+    #endregion
+
     #region Dialog
 
     public void ConversationMsg(string message)
     {
         // aggiunge il testo
-        GameObject newText = Instantiate(dialogLinePrefab, dialogsBox.transform);
+        Instantiate(dialogLinePrefab, dialogsBox.transform);
     }
+
     public void ConversationMsg(string message, int durationInSeconds)
     {
         // aggiunge il testo
@@ -217,10 +216,23 @@ public class PlayerUI : MonoBehaviour {
         // coroutine per la pulizia del testo
         StartCoroutine(dialogClear(newText, durationInSeconds));
     }
+
+    public void ConversationMsg(string message, int durationInSeconds, int delayInSeconds)
+    {
+        // couroutine per il lancio con delay
+        StartCoroutine(dialogDelay(message, durationInSeconds, delayInSeconds));
+    }
+
     private IEnumerator dialogClear(GameObject textToClear, int durationInSeconds)
     {
         yield return new WaitForSecondsRealtime(durationInSeconds);
         Destroy(textToClear);
+    }
+
+    private IEnumerator dialogDelay(string message, int durationInSeconds, int delayInSeconds)
+    {
+        yield return new WaitForSecondsRealtime(delayInSeconds);
+        ConversationMsg(message, durationInSeconds);
     }
 
     #endregion

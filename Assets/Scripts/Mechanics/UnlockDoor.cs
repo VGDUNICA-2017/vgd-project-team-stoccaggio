@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class UnlockDoor : MonoBehaviour {
 
-    public DoorController door; //porta considerata
-    public GameObject[] item; //oggetti necessari a far aprire la porta
+    public DoorController door;     // porta considerata
+    public GameObject item;       // oggetti necessari per lo sblocco
+
     private Pointable pointable;
 
     private void Start()
@@ -20,39 +21,33 @@ public class UnlockDoor : MonoBehaviour {
         {
             if (door.isLocked)
             {
-                if (IsBlocked())
+                if (hasItem())
                 {
                     door.SetLock(false);
                     
-                    for(int i = 0; i < item.Length; i++)
-                    {
-                        SceneController.CurrentScene.RemoveItem(item[i].GetComponent<Collectible>().itemName);
-                    }
-
+                    SceneController.CurrentScene.RemoveItem(item.GetComponent<Collectible>().itemName);
+                    
                     SceneController.CurrentScene.SpeakToSelf("Porta sbloccata!");
-                    pointable.pointedText = "";
                     pointable.RefreshText();
+                    pointable.pointedText = "[F] Apri";
+                    
                 }
                 else
                 {
+                    
                     SceneController.CurrentScene.SpeakToSelf("Mi manca ancora qualcosa per sbloccare la porta");
                 }
             }
         });
     }
 
-    // restituisce true se la porta è bloccata, ovvero il player non ha raccolto tutti gli item per sbloccarla
-    private bool IsBlocked()
+    // check degli oggetti necessari allo sblocco
+    private bool hasItem()
     {
-        int count = 0;
-        while (count < item.Length)
-        {
-            // se l'oggetto non è contenuto nella lista dell'inventario
-            if (!SceneController.CurrentScene.HasItem(item[count].GetComponent<Collectible>().itemName))
-                return false;
+        // se l'oggetto non è contenuto nella lista dell'inventario
+        if (!SceneController.CurrentScene.IsEquipped(item.GetComponent<Collectible>().itemName))
+            return false;
 
-            count++;
-        }
 
         return true;
     }

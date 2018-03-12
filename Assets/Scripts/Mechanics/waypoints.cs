@@ -14,21 +14,15 @@ public class waypoints : MonoBehaviour
     private Animator anim;
     private Rigidbody rb;
 
-    private EnemyFieldofView view;
-    private EnemyFieldofFeel feel;
-
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
 
-        view = GetComponent<EnemyFieldofView>();
-        feel = GetComponent<EnemyFieldofFeel>();
-
-        Move();
+        anim.SetBool("isWalking", true);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         wayPoints[current].position = new Vector3(wayPoints[current].position.x, transform.position.y, wayPoints[current].position.z);
         
@@ -43,10 +37,5 @@ public class waypoints : MonoBehaviour
             Vector3 dir = (wayPoints[current].position - transform.position).normalized;
             transform.rotation = Quaternion.LookRotation(dir);
         }
-    }
-
-    private void Move()
-    {
-        anim.SetBool("isWalking", true);
     }
 }

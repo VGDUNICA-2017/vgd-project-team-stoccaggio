@@ -24,6 +24,8 @@ public class DoorController : MonoBehaviour {
         // evento azione
         pointable.ActionHandler += new Pointable.ActionEventHandler(() =>
         {
+            SetLock(isLocked);
+            pointable.RefreshText();
             if (!isLocked)
             {
                 controller(isOpen);
@@ -31,7 +33,7 @@ public class DoorController : MonoBehaviour {
             }
             else
             {
-                pointable.pointedText = "Bloccata";
+                pointable.pointedText = "[F] Sblocca porta";
             }
         });
     }
@@ -61,10 +63,23 @@ public class DoorController : MonoBehaviour {
         isLocked = locked;
 
         if (isLocked)
-            pointable.pointedText = "Bloccata";
+            pointable.pointedText = "Porta bloccata";
         else if (isOpen)
             pointable.pointedText = "[F] Chiudi";
         else
             pointable.pointedText = "[F] Apri";
+    }
+
+    public void ForceLock()
+    {
+        // chiude la porta se è aperta
+        if (isOpen)
+        {
+            controller(isOpen);
+            isOpen = false;
+        }
+
+        // blocca la porta
+        SetLock(true);
     }
 }

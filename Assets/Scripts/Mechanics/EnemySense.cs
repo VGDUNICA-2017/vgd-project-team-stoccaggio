@@ -6,10 +6,11 @@ public class EnemySense : MonoBehaviour {
 
     // variabili
     public string npcName;
-    public float angleVisual = 90.0f;
-    public float maxDistanceView = 35.0f;
+    public float angleVisual = 90f;
+    public float maxDistanceView = 35f;
     public float baseDistance = 6f;
     public float minDistance = 3f;
+    public float minViewDistance = 4f;
 
     // componenti
     private CapsuleCollider cl;
@@ -25,8 +26,9 @@ public class EnemySense : MonoBehaviour {
     private float alertTimeout;
     private bool alert;
     private bool playerCaught;
-    public float alertTime = 4.0f;
+    public float alertTime = 2.0f;
     public GameObject allarmPoint;
+    private float currentDistance = 0.0f;
 
     void Start()
     {
@@ -59,59 +61,80 @@ public class EnemySense : MonoBehaviour {
 
         // raggio dall'occhio del personaggio alla testa suo bersaglio
         if (Physics.Raycast(sourceEye, playerHead - sourceEye, out raycastBullet, maxDistanceView))
+        {
             // controlla se il raycast colpisce direttamente il bersaglio
             if (raycastBullet.collider == playerCollider)
+            {
                 // controlla l'angolo
                 if (Vector3.Angle(transform.forward, playerHead - sourceEye) < angleVisual / 2.0f)
+                {
+                    currentDistance = raycastBullet.distance;
                     return true;
+                }
+            }
+        }
 
         return false;
     }
 
     private void FixedUpdate()
     {
-        // controlla se il giocatore è stato percepito
-        if(fieldOfFeel() || fieldOfView())
+        // se il player non è stato ancora beccato
+        if (!playerCaught)
         {
-            if (!alert)
+            // controlla se il giocatore è stato percepito
+            if (fieldOfFeel() || fieldOfView())
             {
-                // avvistato per la prima volta
-                alert = true;
-                alertTimeout = Time.time + alertTime;
-                allarmPoint.gameObject.SetActive(true);
-                SceneController.CurrentScene.NpcSpeak(npcName, "Mi è sembrato di percepire qualcosa di strano...");
-            }
-            else
-            {
-                // il player è stato già avvistato
-                if (!playerCaught)
+                // contrikka che il player non passi proprio davanti alla guardia
+                if (currentDistance != 0.0f && currentDistance <= minViewDistance)
                 {
-                    // controlla che non sia stato beccato
-                    if (Time.time >= alertTimeout)
+                    // beccato!
+                    alert = true;
+                    playerCaught = true;
+                    SceneController.CurrentScene.NpcSpeak(npcName, "Allarme! C'e' un intruso! Chiamate le guardie!");
+                    StartCoroutine(catchPlayer());
+                }
+                else if (!alert)
+                {
+                    // avvistato per la prima volta
+                    alert = true;
+                    alertTimeout = Time.time + alertTime;
+                    allarmPoint.gameObject.SetActive(true);
+                    SceneController.CurrentScene.NpcSpeak(npcName, "Mi è sembrato di percepire qualcosa di strano...");
+                }
+                else
+                {
+                    // il player è stato già avvistato
+                    if (!playerCaught)
                     {
-                        // beccato!
-                        playerCaught = true;
-                        SceneController.CurrentScene.NpcSpeak(npcName, "Allarme! C'e' un intruso! Chiamate le guardie!");
-                        StartCoroutine(catchPlayer());
+                        // controlla che non sia stato beccato
+                        if (Time.time >= alertTimeout)
+                        {
+                            // beccato!
+                            playerCaught = true;
+                            SceneController.CurrentScene.NpcSpeak(npcName, "Allarme! C'e' un intruso! Chiamate le guardie!");
+                            StartCoroutine(catchPlayer());
+                        }
                     }
                 }
             }
-        }
-        else
-        {
-            // il player era stato avvistato
-            if (alert)
+            // se l'NPC non è più in stato di allerta (è trascorso il tempo di allerta)
+            else if (Time.time > alertTimeout)
             {
-                // il player non è più percepito
-                alert = false;
-                allarmPoint.gameObject.SetActive(false);
+                // il player era stato avvistato
+                if (alert)
+                {
+                    // il player non è più percepito
+                    alert = false;
+                    allarmPoint.gameObject.SetActive(false);
+                }
             }
         }
     }
 
     private IEnumerator catchPlayer()
     {
-        yield return new WaitForSecondsRealtime(4);
+        yield return new WaitForSecondsRealtime(2);
 
         SceneController.CurrentScene.GameOver();
     }

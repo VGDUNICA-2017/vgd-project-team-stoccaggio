@@ -13,10 +13,13 @@ EditorBuildSettings:
     guid: 45fe90b64dc6b94439cad116bbdaaf93
   - enabled: 1
     path: Assets/Scenes/Terra.unity
-    guid: 2ad14ac8bbb27a44d8f69304f3306993
+    guid: 8ce62474f1ea0a045865e8c92a7c27d1
   - enabled: 1
     path: Assets/Scenes/Razzo Fase 1.unity
     guid: e587a0406128781468d32a8ad17ca19a
+  - enabled: 1
+    path: Assets/Scenes/Razzo Fase 2.unity
+    guid: 9317972c16b98f544a1daae80b076f5b
   - enabled: 1
     path: Assets/Scenes/Razzo Fase 3.unity
     guid: a27712611887de943b5cde00bc921089
