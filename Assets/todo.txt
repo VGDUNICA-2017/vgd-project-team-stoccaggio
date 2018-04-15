@@ -1,0 +1,16 @@
+
+// Terra
+sistemare pavimento piscina
+aggiungere props in piscina
+
+script luci di emergenza su tutta la mappa
+
+script botola di fine capitolo
+
+mettere il montacarichi
+
+// Fase 1
+porte ascensore
+finestre
+scale
+props
