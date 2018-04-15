@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour {
 
@@ -64,7 +65,13 @@ public class SceneController : MonoBehaviour {
 
     public void SpeakToSelf(string message)
     {
+        //player.GetComponent<AudioSource>().Play();
         playerUI.ConversationMsg("* " + message + " *", 4);
+    }
+
+    public void SpeakToSelf(string message, int delay)
+    {
+        playerUI.ConversationMsg("* " + message + " *", 4, delay);
     }
 
     public void NpcSpeak(string npcName, string message)
@@ -153,7 +160,7 @@ public class SceneController : MonoBehaviour {
     {
         playerUI.OpenTransition(() =>
         {
-            GameController.CurrentController.LoadScene("Scenes/Terra");
+            GameController.CurrentController.LoadGameSave();
         });
     }
 }

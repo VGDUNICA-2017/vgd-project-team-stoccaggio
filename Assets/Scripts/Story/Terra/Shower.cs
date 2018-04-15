@@ -6,6 +6,7 @@ public class Shower : MonoBehaviour {
 
     public GameObject water;
     public bool isActive;
+    public GameObject audioSource;
 
     private Pointable pointable;
 
@@ -19,6 +20,13 @@ public class Shower : MonoBehaviour {
         {
             isActive = !isActive;
             water.SetActive(isActive);
+
+            // attivazione/disattivazione suono
+            if(isActive)
+                audioSource.GetComponent<AudioSource>().Play();
+            else
+                audioSource.GetComponent<AudioSource>().Stop();
+
         });
     }
 }

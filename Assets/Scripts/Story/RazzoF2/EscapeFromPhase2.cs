@@ -4,10 +4,25 @@ using UnityEngine;
 
 public class EscapeFromPhase2 : MonoBehaviour {
 
+    private bool isActive = false;
+
 	void Start () {
-        GetComponent<Pointable>().ActionHandler += new Pointable.ActionEventHandler(() =>
+
+        Pointable p = GetComponent<Pointable>();
+
+        p.ActionHandler += new Pointable.ActionEventHandler(() =>
         {
-            SceneController.CurrentGameObject.GetComponent<RazzoF2>().FinalHatch();
+            if(!isActive)
+            {
+                // disattiva interazione
+                p.pointedText = "";
+                p.pointedSubText = "";
+                p.RefreshText();
+                isActive = true;
+
+                // evento storia
+                SceneController.CurrentGameObject.GetComponent<RazzoF2>().FinalHatch();
+            }
         });
     }
 }

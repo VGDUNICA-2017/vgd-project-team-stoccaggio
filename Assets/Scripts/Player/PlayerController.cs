@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
     // variabili
     public GameObject playerCamera;
 
+    // audio
+    public GameObject audioFootStep;
+    public GameObject audioRun;
 
     public float slopeStep = 0.1f;
     public float walkSpeed = 5.0f;
@@ -73,13 +76,18 @@ public class PlayerController : MonoBehaviour
         // lettura input ed aggiornamento stato se il gioco non è in pausa
         if(Time.timeScale != 0)
         {
+            // suoni
+            movingSound();
+
+            // input
             GetInput();
 
             // movimento
-            Move();
+            move();
 
             // rotazione
-            Rotate();
+            rotate();
+
         }
     }
 
@@ -149,7 +157,7 @@ public class PlayerController : MonoBehaviour
             soundProduced *= crouchSoundMutiplier;
     }
 
-    void Move()
+    void move()
     {
         // sblocca il movimento
         rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -193,7 +201,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Rotate()
+    void rotate()
     {
         // movimento lineare e non brusco
         viewDirection = Vector2.Scale(viewDirection, new Vector2(viewSensitivity * smoothView, viewSensitivity * smoothView));
@@ -225,5 +233,33 @@ public class PlayerController : MonoBehaviour
     public GameObject ClimbedObject()
     {
         return climbedObject;
+    }
+
+    void movingSound()
+    {
+        if (isIdle || isCrouch)
+        {
+            if(audioFootStep.GetComponent<AudioSource>().isPlaying)
+                audioFootStep.GetComponent<AudioSource>().Stop();
+
+            if (audioRun.GetComponent<AudioSource>().isPlaying)
+                audioRun.GetComponent<AudioSource>().Stop();
+        }
+        else if (isWalking)
+        {
+            if (!audioFootStep.GetComponent<AudioSource>().isPlaying)
+                audioFootStep.GetComponent<AudioSource>().Play();
+
+            if (audioRun.GetComponent<AudioSource>().isPlaying)
+                audioRun.GetComponent<AudioSource>().Stop();
+        }
+        else if (isRunning)
+        {
+            if (audioFootStep.GetComponent<AudioSource>().isPlaying)
+                audioFootStep.GetComponent<AudioSource>().Stop();
+
+            if (!audioRun.GetComponent<AudioSource>().isPlaying)
+                audioRun.GetComponent<AudioSource>().Play();
+        }
     }
 }

@@ -30,6 +30,11 @@ public class Countdown {
         return Mathf.FloorToInt((float)timer - Minutes() * 60);
     }
 
+    public bool isExpired()
+    {
+        return timer <= 0;
+    }
+
     public string NiceString()
     {
         return string.Format("{0:0}:{1:00}", Minutes(), Seconds());

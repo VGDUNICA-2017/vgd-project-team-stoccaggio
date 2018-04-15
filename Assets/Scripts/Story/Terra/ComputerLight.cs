@@ -9,6 +9,8 @@ public class ComputerLight : MonoBehaviour {
     public GameObject machineLight;
 
     private Pointable pointable;
+    public GameObject audioButton;
+    public GameObject audioPc;
     private bool isActive = false;
 
 	void Start () {
@@ -21,6 +23,10 @@ public class ComputerLight : MonoBehaviour {
         {
             if(!isActive)
             {
+                // attivazione audio
+                audioButton.GetComponent<AudioSource>().Play();
+                audioPc.GetComponent<AudioSource>().Play();
+
                 // attivazione unica
                 isActive = true;
 
@@ -34,7 +40,7 @@ public class ComputerLight : MonoBehaviour {
                 SceneController.CurrentScene.playerUI.ActionText("", "");
 
                 // trigger storia
-                SceneController.CurrentGameObject.GetComponent<Terra>().ComputersPowerHandler();
+                SceneController.CurrentGameObject.GetComponent<Terra>().ComputersPowerHandler();                
             }
         });
     }

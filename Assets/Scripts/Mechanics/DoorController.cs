@@ -6,10 +6,13 @@ public class DoorController : MonoBehaviour {
 
     public bool isOpen;
     public bool isLocked;
+    public string hints;
 
     private Pointable pointable;
     private Animator animator;
     private AudioSource audioSource;
+    private BoxCollider boxCollider;
+    
 
     void Start()
     {
@@ -17,6 +20,7 @@ public class DoorController : MonoBehaviour {
         pointable = GetComponent<Pointable>();
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
+        boxCollider = GetComponent<BoxCollider>();
 
         // inizializzazione
         SetLock(isLocked);
@@ -33,6 +37,8 @@ public class DoorController : MonoBehaviour {
             }
             else
             {
+                if(hints != null && hints.Trim() != "")
+                    SceneController.CurrentScene.SpeakToSelf(hints);
                 pointable.pointedText = "[F] Sblocca porta";
             }
         });
@@ -53,7 +59,7 @@ public class DoorController : MonoBehaviour {
             pointable.pointedText = "[F] Apri";
             pointable.RefreshText();
         }
-
+        StartCoroutine(DisableCollider());
         // audio apertura/chiusura
         audioSource.Play();
     }
@@ -81,5 +87,12 @@ public class DoorController : MonoBehaviour {
 
         // blocca la porta
         SetLock(true);
+    }
+
+    private IEnumerator DisableCollider()
+    {
+        boxCollider.enabled = false;
+        yield return new WaitForSeconds(1);
+        boxCollider.enabled = true;
     }
 }

@@ -7,25 +7,33 @@ public class Terra : MonoBehaviour {
     public GameObject[] computers;
     public DoorController serverDoor;
     public Pointable cargoButton;
-    public GameObject carrello;
-    public GameObject audio;
-    public GameObject smoke;
-    public GameObject boxCollider;
 
+    // cargo
+    public GameObject carrello;
+    public GameObject audioCargo;
+    public GameObject cargoBoxCollider;
+    private bool isActive = false;
 
     void Start () {
+
+        // sovrascrive il salvataggio
+        SaveFileManager.Save(new GameSaveData()
+        {
+            currentScenePath = "Terra",
+            currentCheckpointID = 0
+        });
+
+        // intro
+        SceneController.CurrentScene.Notification("Base spaziale di Huston, Terra", 10);
 
         // senza oggetti
         SceneController.CurrentScene.AddItem(new Item("hands", ""));
 
         // missioni
-        SceneController.CurrentScene.playerUI.AddMission("test", "benvenuto", "ecco il testo");
-        SceneController.CurrentScene.playerUI.AddMission("test1", "benvenuto", "ecco il testo dgdgdfg.fdg dfg drgerwg.werg rweghwrth.wrth  wrth.wtrh.");
+        SceneController.CurrentScene.playerUI.AddMission("runAway", "Run Away!", "Il razzo sta per decollare, trova il modo per salire prima che sia troppo tardi!");
 
-        //Inizializzazione animazioni/effetti
-        smoke.GetComponent<ParticleSystem>().Stop();
-        audio.GetComponent<AudioSource>().Stop();
-        boxCollider.SetActive(false);
+        // inizializzazione animazioni/effetti
+        audioCargo.GetComponent<AudioSource>().Stop();
 
         // inizializzazione countdowns
         SceneController.CurrentScene.countdowns.Add("power", new Countdown());
@@ -42,7 +50,7 @@ public class Terra : MonoBehaviour {
             SceneController.CurrentScene.GameOver();
         });
 
-        // inizializzazioni
+        // inizializzazione cargo
         setupCargoButton();
     }
 
@@ -92,7 +100,7 @@ public class Terra : MonoBehaviour {
         serverDoor.SetLock(false);
 
         // start countdown backup corrente
-        SceneController.CurrentScene.countdowns["power"].Set(30);
+        SceneController.CurrentScene.countdowns["power"].Set(60);
     }
 
     private void electricPowerBackOn()
@@ -130,6 +138,10 @@ public class Terra : MonoBehaviour {
 
     public void RocketLaunch2()
     {
+        // missione
+        SceneController.CurrentScene.playerUI.RemoveMission("takeTime");
+        SceneController.CurrentScene.playerUI.AddMission("rocketTime", "Al razzo!", "Non c'è più tempo! Trova un modo di uscire dalla stanza ed arrivare al razzo!");
+
         // visualizzazione countdown
         SceneController.CurrentScene.SetUITimer("rocket");
 
@@ -150,31 +162,41 @@ public class Terra : MonoBehaviour {
     {
         cargoButton.ActionHandler += new Pointable.ActionEventHandler(() =>
         {
-            // stop del countdown
-            SceneController.CurrentScene.playerUI.CountdownReset();
-            SetupAnimation();
-            SceneController.CurrentScene.countdowns["rocket"].Set(100);
+            if(!isActive)
+            {
+                // disattiva interazione
+                cargoButton.pointedText = "";
+                cargoButton.pointedSubText = "In funzione";
+                cargoButton.RefreshText();
+                isActive = true;
 
-            // dialogo
-            SceneController.CurrentScene.SpeakToSelf("Questo montacarichi mi porterà direttamente dentro il razzo!");
+                // stop del countdown
+                SceneController.CurrentScene.playerUI.CountdownReset();
+                SetupAnimation();
+                SceneController.CurrentScene.countdowns["rocket"].Set(100);
 
-            // salvataggio
-            SaveFileManager.Save(new GameSaveData() {
-                currentScenePath = "Razzo fase 1",
-            });
+                // dialogo
+                SceneController.CurrentScene.SpeakToSelf("Questo montacarichi mi porterà direttamente dentro il razzo!");
 
-            // cambio scena
-            SceneController.CurrentScene.playerUI.OpenTransition(() => {
-                GameController.CurrentController.LoadScene("Razzo fase 1");
-            });
+                // salvataggio
+                SaveFileManager.Save(new GameSaveData()
+                {
+                    currentScenePath = "Razzo fase 1",
+                    currentCheckpointID = 0
+                });
+
+                // cambio scena
+                SceneController.CurrentScene.playerUI.OpenTransition(() => {
+                    GameController.CurrentController.LoadScene("Razzo fase 1");
+                });
+            }
         });
     }
 
     private void SetupAnimation()
     {
-        smoke.GetComponent<ParticleSystem>().Play();
-        audio.GetComponent<AudioSource>().Play();
-        boxCollider.SetActive(true);
+        audioCargo.GetComponent<AudioSource>().Play();
+        cargoBoxCollider.SetActive(true);
         carrello.GetComponent<Animator>().SetTrigger("Move");
     }
 

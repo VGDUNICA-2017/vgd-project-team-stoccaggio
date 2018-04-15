@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class RazzoF1 : MonoBehaviour {
 
+    public GameObject audioStaccoPropulsore;
+
     void Start()
     {
+        // intro
+        SceneController.CurrentScene.Notification("Propulsore 01", 10);
+
         // senza oggetti
         SceneController.CurrentScene.AddItem(new Item("hands", ""));
 
         // missioni
-        SceneController.CurrentScene.playerUI.AddMission("test", "benvenuto", "ecco il testo");
+        SceneController.CurrentScene.playerUI.AddMission("goUp", "Go up!", "La prima parte del razzo sta per staccarsi, sali nella seconda parte prima che sia troppo tardi!");
+        //SceneController.CurrentScene.playerUI.AddMission("hints", "Hints", "Nel razzo è presente una scala ed un ascensore che permettono l'accesso alla seconda parte del razzo");
 
         // inizializzazione countdown
         SceneController.CurrentScene.countdowns.Add("rocket", new Countdown());
@@ -18,35 +24,46 @@ public class RazzoF1 : MonoBehaviour {
         SceneController.CurrentScene.SetUITimer("rocket");
         SceneController.CurrentScene.countdowns["rocket"].ExpirationHandler += new Countdown.ExpiretionEventHandler(() =>
         {
+            audioStaccoPropulsore.GetComponent<AudioSource>().Play();
             SceneController.CurrentScene.SpeakToSelf("Il propulsore si è staccato! E' la fine!");
             SceneController.CurrentScene.ClearUITimer("rocket");
             SceneController.CurrentScene.GameOver();
         });
 
+        // shake camera
+        SceneController.CurrentScene.GetCameraShake().amplitude = 0.02f;
+        SceneController.CurrentScene.GetCameraShake().StartShake();
     }
 
     public void FinalHatch()
     {
-        if (SceneController.CurrentScene.HasItem("rocketWrench"))
-        {
-            SceneController.CurrentScene.SpeakToSelf("Finalmente, mancava davvero poco!");
-            SceneController.CurrentScene.ClearUITimer("rocket");
+        // shake camera
+        SceneController.CurrentScene.GetCameraShake().amplitude = 0.04f;
 
-            // salvataggio
-            SaveFileManager.Save(new GameSaveData() {
-                currentScenePath = "Razzo fase 2",
-            });
+        // shake camera
+        SceneController.CurrentScene.GetCameraShake().amplitude = 0.08f;
 
-            // cambio scena
-            SceneController.CurrentScene.playerUI.OpenTransition(() =>
-            {
-                GameController.CurrentController.LoadScene("Razzo Fase 2");
-            });
-        }
-        else
+        SceneController.CurrentScene.SpeakToSelf("Finalmente, mancava davvero poco!");
+        SceneController.CurrentScene.ClearUITimer("rocket");
+
+        // salvataggio
+        SaveFileManager.Save(new GameSaveData() {
+            currentScenePath = "Razzo fase 2",
+            currentCheckpointID = 0
+        });
+
+        // cambio scena
+        SceneController.CurrentScene.playerUI.OpenTransition(() =>
         {
-            SceneController.CurrentScene.SpeakToSelf("Non si apre");
-            SceneController.CurrentScene.SpeakToSelf("Devo trovare qualcosa per forzarla!");
-        }
+            StartCoroutine(Transition());
+        });
+    }
+
+    public IEnumerator Transition()
+    {
+        audioStaccoPropulsore.GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(5);
+
+        GameController.CurrentController.LoadScene("Razzo Fase 2");
     }
 }

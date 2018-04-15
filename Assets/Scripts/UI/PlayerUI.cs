@@ -73,7 +73,11 @@ public class PlayerUI : MonoBehaviour {
 
             // chiudi il menu di uscita
             exitMenu.SetActive(false);
+
+            // riattiva audio
+            AudioListener.pause = false;
         });
+
         exitMenu.transform.Find("Yes").GetComponent<Button>().onClick.AddListener(() =>
         {
             // sblocca il gioco
@@ -81,6 +85,9 @@ public class PlayerUI : MonoBehaviour {
 
             // chiudi il menu di uscita
             exitMenu.SetActive(false);
+
+            // riattiva audio
+            AudioListener.pause = false;
 
             // carica il menu principale
             GameObject.FindWithTag("GameController").GetComponent<GameController>().LoadScene("Scenes/MainMenu");
@@ -99,6 +106,9 @@ public class PlayerUI : MonoBehaviour {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
 
+                // riattiva audio
+                AudioListener.pause = false;
+
                 // sblocca il gioco
                 Time.timeScale = 1;
 
@@ -108,6 +118,9 @@ public class PlayerUI : MonoBehaviour {
             // apri menu
             else
             {
+                // disattiva l'audio
+                AudioListener.pause = true;
+
                 // pausa il gioco
                 Time.timeScale = 0;
 
@@ -225,13 +238,13 @@ public class PlayerUI : MonoBehaviour {
 
     private IEnumerator dialogClear(GameObject textToClear, int durationInSeconds)
     {
-        yield return new WaitForSecondsRealtime(durationInSeconds);
+        yield return new WaitForSeconds(durationInSeconds);
         Destroy(textToClear);
     }
 
     private IEnumerator dialogDelay(string message, int durationInSeconds, int delayInSeconds)
     {
-        yield return new WaitForSecondsRealtime(delayInSeconds);
+        yield return new WaitForSeconds(delayInSeconds);
         ConversationMsg(message, durationInSeconds);
     }
 
@@ -271,6 +284,13 @@ public class PlayerUI : MonoBehaviour {
         GameObject newMission = Instantiate(missionPrefab, missionsPanel.transform);
         loadMissionDetails(newMission, title, description);
         missions.Add(id, newMission);
+        missionsPanel.GetComponent<AudioSource>().Play();
+    }
+
+    public void RemoveMission(string name)
+    {
+        if(missions.ContainsKey(name))
+            missions[name].SetActive(false);
     }
 
     #endregion
@@ -301,7 +321,7 @@ public class PlayerUI : MonoBehaviour {
 
     private IEnumerator transitionEndHandler(OnTransitionEnd onTransitionEnd)
     {
-        yield return new WaitForSecondsRealtime(4);
+        yield return new WaitForSeconds(4);
 
         onTransitionEnd();
     }

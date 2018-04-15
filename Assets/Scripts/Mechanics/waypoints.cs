@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class waypoints : MonoBehaviour
+public class Waypoints : MonoBehaviour
 {
     public Transform[] wayPoints;
     public float speed = 4.0f;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemySense : MonoBehaviour {
 
@@ -29,6 +30,7 @@ public class EnemySense : MonoBehaviour {
     public float alertTime = 2.0f;
     public GameObject allarmPoint;
     private float currentDistance = 0.0f;
+    public GameObject allarmSound;
 
     void Start()
     {
@@ -85,13 +87,18 @@ public class EnemySense : MonoBehaviour {
             // controlla se il giocatore è stato percepito
             if (fieldOfFeel() || fieldOfView())
             {
-                // contrikka che il player non passi proprio davanti alla guardia
+                // controlla che il player non passi proprio davanti alla guardia
                 if (currentDistance != 0.0f && currentDistance <= minViewDistance)
                 {
                     // beccato!
                     alert = true;
                     playerCaught = true;
-                    SceneController.CurrentScene.NpcSpeak(npcName, "Allarme! C'e' un intruso! Chiamate le guardie!");
+
+                    if(SceneManager.GetActiveScene().name != "Astronave")
+                        SceneController.CurrentScene.NpcSpeak(npcName, "Allarme! C'e' un intruso! Chiamate le guardie!");
+                    else
+                        SceneController.CurrentScene.NpcSpeak(npcName, "Non ci posso credere! Ragazzi aiutatemi!");
+
                     StartCoroutine(catchPlayer());
                 }
                 else if (!alert)
@@ -100,6 +107,7 @@ public class EnemySense : MonoBehaviour {
                     alert = true;
                     alertTimeout = Time.time + alertTime;
                     allarmPoint.gameObject.SetActive(true);
+                    allarmPoint.GetComponent<AudioSource>().Play();
                     SceneController.CurrentScene.NpcSpeak(npcName, "Mi è sembrato di percepire qualcosa di strano...");
                 }
                 else
@@ -112,7 +120,13 @@ public class EnemySense : MonoBehaviour {
                         {
                             // beccato!
                             playerCaught = true;
-                            SceneController.CurrentScene.NpcSpeak(npcName, "Allarme! C'e' un intruso! Chiamate le guardie!");
+                            allarmSound.GetComponent<AudioSource>().Play();
+
+                            if (SceneManager.GetActiveScene().name != "Astronave")
+                                SceneController.CurrentScene.NpcSpeak(npcName, "Allarme! C'e' un intruso! Chiamate le guardie!");
+                            else
+                                SceneController.CurrentScene.NpcSpeak(npcName, "Non ci posso credere! Ragazzi aiutatemi!");
+
                             StartCoroutine(catchPlayer());
                         }
                     }
@@ -134,7 +148,7 @@ public class EnemySense : MonoBehaviour {
 
     private IEnumerator catchPlayer()
     {
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSeconds(2);
 
         SceneController.CurrentScene.GameOver();
     }

@@ -4,11 +4,34 @@ using UnityEngine;
 
 public class FinalHatch : MonoBehaviour {
 
-	void Start () {
+    private bool isActive = false;
 
-        GetComponent<Pointable>().ActionHandler += new Pointable.ActionEventHandler(() =>
+    void Start()
+    {
+
+        Pointable p = GetComponent<Pointable>();
+
+        p.ActionHandler += new Pointable.ActionEventHandler(() =>
         {
-            SceneController.CurrentGameObject.GetComponent<RazzoF1>().FinalHatch();
+            if (!isActive)
+            {
+                if (SceneController.CurrentScene.IsEquipped("rocketWrench"))
+                {
+                    // disattiva interazione
+                    p.pointedText = "";
+                    p.pointedSubText = "";
+                    p.RefreshText();
+                    isActive = true;
+
+                    // evento storia
+                    SceneController.CurrentGameObject.GetComponent<RazzoF1>().FinalHatch();
+                }
+                else
+                {
+                    SceneController.CurrentScene.SpeakToSelf("Non si apre");
+                    SceneController.CurrentScene.SpeakToSelf("Devo trovare qualcosa per forzarla!");
+                }
+            }
         });
     }
 }

@@ -8,4 +8,5 @@ public class GameSaveData
 {
     public string currentScenePath;
     public int currentCheckpointID;
+    public bool copilotSaved;
 }

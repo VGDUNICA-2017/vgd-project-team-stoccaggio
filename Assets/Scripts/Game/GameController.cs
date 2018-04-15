@@ -6,8 +6,15 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
 
     public static GameController CurrentController;
-
+    public bool debug = false;
     public GameSaveData gameSaveData;
+
+    void Start()
+    {
+        // carica i dati dell'ultimo salvataggio (se presente)
+        if (!debug)
+            gameSaveData = SaveFileManager.Load();
+    }
 
     #region Caricamento scene
 
@@ -54,10 +61,38 @@ public class GameController : MonoBehaviour {
 
     #endregion
 
-    // rende il gameObject permanente
+    #region Caricamento-Salvataggio gioco
+
+    public void LoadGameSave()
+    {
+        // ricarica i dati del salvataggio corrente
+        gameSaveData = SaveFileManager.Load();
+
+        if (gameSaveData != null)
+            LoadScene(gameSaveData.currentScenePath);
+        else
+            LoadScene("Terra");
+    }
+
+    public void LoadNewGame()
+    {
+        gameSaveData = null;
+        LoadScene("Terra");
+    }
+
+    #endregion
+
+    // rende il gameObject permanente e unico
     void Awake()
     {
-        CurrentController = this;
-        DontDestroyOnLoad(transform.gameObject);
+        if(CurrentController == null)
+        {
+            CurrentController = this;
+            DontDestroyOnLoad(transform.gameObject);
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 }

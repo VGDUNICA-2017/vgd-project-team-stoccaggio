@@ -10,6 +10,8 @@ public class PowerOn : MonoBehaviour {
     private Pointable pointable;
     private bool isActive = false;
 
+    public GameObject audioButton;
+
     void Start()
     {
         // componente pointable
@@ -18,6 +20,7 @@ public class PowerOn : MonoBehaviour {
         // evento azione
         pointable.ActionHandler += new Pointable.ActionEventHandler(() =>
         {
+            audioButton.GetComponent<AudioSource>().Play();
             if (!isActive)
             {
                 isActive = true;
@@ -29,9 +32,4 @@ public class PowerOn : MonoBehaviour {
             }
         });
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

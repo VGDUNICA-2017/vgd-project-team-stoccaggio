@@ -9,7 +9,7 @@ public class Collectible : MonoBehaviour
 
     private Pointable pointable;
 
-	void Start () {
+	void Awake () {
 
         // componente pointable
         pointable = GetComponent<Pointable>();

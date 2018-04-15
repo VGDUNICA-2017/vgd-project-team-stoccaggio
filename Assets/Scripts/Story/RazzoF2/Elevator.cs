@@ -8,6 +8,8 @@ public class Elevator : MonoBehaviour {
     private Pointable pointable;
     private bool isActive = false;
 
+    public GameObject audioButton;
+
     void Start()
     {
         // componente pointable
@@ -18,6 +20,8 @@ public class Elevator : MonoBehaviour {
         {
             if (!isActive)
             {
+                audioButton.GetComponent<AudioSource>().Play();
+
                 isActive = true;
 
                 // forza la chiusura della porta

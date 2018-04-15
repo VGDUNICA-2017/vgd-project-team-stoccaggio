@@ -5,8 +5,14 @@ using UnityEngine;
 public class CameraShake : MonoBehaviour {
 
     public float amplitude = 0.1f;
+    public bool shakeOnStart = false;
 
     private bool isActive = false;
+
+    void Start()
+    {
+        if (shakeOnStart) StartShake();        
+    }
 
     public void StartShake()
     {

@@ -15,7 +15,7 @@ public class WaterGathering : MonoBehaviour {
             if (SceneController.CurrentScene.IsEquipped("bottle"))
             {
                 SceneController.CurrentScene.RemoveItem("bottle");
-                SceneController.CurrentScene.AddItem(new Item("waterBottle", "waterBottle"));
+                SceneController.CurrentScene.AddItem(new Item("waterBottle", "Bottiglia piena d'acqua"));
 
                 SceneController.CurrentScene.SpeakToSelf("Ho raccolto dell'acqua!");
                 

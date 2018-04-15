@@ -11,6 +11,7 @@ public class SetCentrifuga : MonoBehaviour {
     private bool isPowered;
 
     private Pointable pointable;
+    public GameObject audioSource;
 
     void Start()
     {
@@ -37,6 +38,8 @@ public class SetCentrifuga : MonoBehaviour {
 
                 // disattiva la corrente
                 SceneController.CurrentGameObject.GetComponent<Terra>().ElectricPowerOff();
+
+                audioSource.GetComponent<AudioSource>().Play();
             }
         });
 
@@ -44,6 +47,7 @@ public class SetCentrifuga : MonoBehaviour {
         SceneController.CurrentScene.countdowns["power"].ExpirationHandler += new Countdown.ExpiretionEventHandler(() =>
         {
             // spegne la centrifuga
+            audioSource.GetComponent<AudioSource>().Stop();
             isPowered = false;
             centrifuga.gameObject.GetComponent<Animator>().SetTrigger("Off");
             pointable.pointedSubText = "[F] Attiva la centrifuga";

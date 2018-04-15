@@ -9,14 +9,21 @@ public class RazzoF2 : MonoBehaviour {
     public GameObject ElevatorControllerOn;
     public GameObject ElevatorControllerOff;
     public Pointable ElevatorPointable;
+    public GameObject audioElevator;
+    public GameObject audioBlocco;
+    public GameObject audioStaccoPropulsore;
 
     void Start()
     {
+        // intro
+        SceneController.CurrentScene.Notification("Propulsore 02", 10);
+
         // senza oggetti
         SceneController.CurrentScene.AddItem(new Item("hands", ""));
 
         // missioni
-        SceneController.CurrentScene.playerUI.AddMission("test", "benvenuto", "ecco il testo");
+        SceneController.CurrentScene.playerUI.AddMission("goUp2", "Go up 2.0!", "L'ultima parte del razzo sta per staccarsi, sali nell'astronave prima che sia troppo tardi!");
+        //SceneController.CurrentScene.playerUI.AddMission("hints", "Hints", "Nel razzo è presente una scala ed un ascensore che permettono l'accesso all'astronave");
 
         // inizializzazione countdown
         SceneController.CurrentScene.countdowns.Add("rocket", new Countdown());
@@ -24,6 +31,7 @@ public class RazzoF2 : MonoBehaviour {
         SceneController.CurrentScene.SetUITimer("rocket");
         SceneController.CurrentScene.countdowns["rocket"].ExpirationHandler += new Countdown.ExpiretionEventHandler(() =>
         {
+            audioStaccoPropulsore.GetComponent<AudioSource>().Play();
             SceneController.CurrentScene.SpeakToSelf("Il propulsore si è staccato! E' la fine!");
             SceneController.CurrentScene.ClearUITimer("rocket");
             SceneController.CurrentScene.GameOver();
@@ -42,11 +50,26 @@ public class RazzoF2 : MonoBehaviour {
         SceneController.CurrentScene.SpeakToSelf("Manca davvero poco!");
         SceneController.CurrentScene.ClearUITimer("rocket");
 
+        // salvataggio
+        SaveFileManager.Save(new GameSaveData()
+        {
+            currentScenePath = "Astronave",
+            currentCheckpointID = 0
+        });
+
         // cambio scena
         SceneController.CurrentScene.playerUI.OpenTransition(() =>
         {
-            GameController.CurrentController.LoadScene("scenes/Terra");
+            StartCoroutine(Transition());            
         });
+    }
+
+    public IEnumerator Transition()
+    {
+        audioStaccoPropulsore.GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(5);
+
+        GameController.CurrentController.LoadScene("scenes/Astronave");
     }
 
     public void PowerOn()
@@ -69,6 +92,20 @@ public class RazzoF2 : MonoBehaviour {
 
     public void Elevator()
     {
+        SceneController.CurrentScene.SpeakToSelf("L'ascensore sta salendo");
+        audioElevator.GetComponent<AudioSource>().Play();
+        StartCoroutine(ElevatorBlock());        
+    }
+
+    private IEnumerator ElevatorBlock()
+    {
+        yield return new WaitForSeconds(5);
+
+        //audio del blocco
+        audioElevator.GetComponent<AudioSource>().Stop();
+        audioBlocco.GetComponent<AudioSource>().Play();
+
+
         // pensieri del personaggio
         SceneController.CurrentScene.SpeakToSelf("L'ascensore si è bloccato, l'energia non era sufficiente");
 
