@@ -1,0 +1,41 @@
+
+
+ASTRONAVE							
+												POSITIO	    |	  ROTATION
+											
+
+	PLANCIA DI COMANDO							-8.94/0/0	      0/0/0	                     
+	
+	SALA MEDICO								    10/0/30           0/90/0
+											
+	STANZA PILOTA							    10/0/-40          0/90/0
+											
+	INFERMERIA								    20/0/-5           0/90/0
+											
+	SALA INTRATTENIMENTO + DISPENSA			    40/0-20           0/90/0
+											 
+	SALA ESPERIMENTI						    65/0/-20          0/90/0
+											
+	STANZA COPILOTA							    105/0/-40         0/90/0
+											
+	STANZA INGEGNERE						    110/0/40          0/-90/0
+											
+	IDROPONICA								    110/0/-0.365      0/0/0
+											
+	PASSAGGIO PIANI					            125/0/-2.5        0/0/0		
+											
+	STIVA 1										155/0/0           0/0/0	
+											
+	STIVA 2									    180/0/0           0/0/0
+											
+	CORRIDOIO							        0/0/0             0/0/0	
+											
+	CUNICOLI								    0/0/0             0/0/0  
+											
+	CORRIDOIO SALA MOTORI					    0/0/0             0/0/0
+	
+	SALA MOTORI			                        0/0/0             0/0/0
+	
+	BELVEDERE                                   60/10/0           0/0/0
+	
+	CORRIDOIO BELVEDERE						    85/10/-2.5		  0/0/0	
