@@ -78,7 +78,7 @@ public class Astronave : MonoBehaviour {
             storyDays[1].SetActive(true);
 
             // missione
-            SceneController.CurrentScene.playerUI.AddMission("hide", "Rifugio", "Trova un rifugio dove poter dormire e passare il viaggio senza essere scoperto daglia astronauti.");
+            SceneController.CurrentScene.playerUI.AddMission("hide", "Rifugio", "Trova un rifugio dove poter dormire e passare il viaggio senza essere scoperto dagli astronauti.");
         });
 
         yield return new WaitForSeconds(4);
@@ -116,7 +116,7 @@ public class Astronave : MonoBehaviour {
 
     private void surviveMissionCheck()
     {
-        if (SceneController.CurrentScene.HasItem("water") && SceneController.CurrentScene.HasItem("food"))
+        if (SceneController.CurrentScene.HasItem("waterBottle") && SceneController.CurrentScene.HasItem("food"))
         {
             // missione
             SceneController.CurrentScene.playerUI.RemoveMission("survive");
@@ -237,7 +237,7 @@ public class Astronave : MonoBehaviour {
             // Pensieri del personaggio
             SceneController.CurrentScene.SpeakToSelf("Finalmente! E' arrivato il momento di fuggire!", 1);
 
-            SceneController.CurrentScene.SpeakToSelf("Conviene che ammazzi il medico, prima che mi veda!", 3);
+            SceneController.CurrentScene.SpeakToSelf("Conviene stordire il medico, prima che mi veda!", 3);
 
         });
     }

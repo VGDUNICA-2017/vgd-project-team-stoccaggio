@@ -17,9 +17,15 @@ public class RouteWarning : MonoBehaviour {
         {
             if(!isTriggered)
             {
+                isTriggered = true;
+
+                pointable.pointedText = "";
+                pointable.pointedSubText = "";
+                pointable.RefreshText();
+
                 // missione
                 SceneController.CurrentScene.playerUI.RemoveMission("route");
-                SceneController.CurrentScene.playerUI.AddMission("radarAlarm", "Scontro imminente!", "Attiva il radar di emergeneza per permettere al sistem di monitoraggio di attivare l'allarme.");
+                SceneController.CurrentScene.playerUI.AddMission("radarAlarm", "Scontro imminente!", "Attiva il radar di emergenza per permettere al sistema di monitoraggio di attivare l'allarme.");
 
                 // pensieri personaggio
                 SceneController.CurrentScene.SpeakToSelf("Non si sono accorti di un asteroide lungo la rotta!");

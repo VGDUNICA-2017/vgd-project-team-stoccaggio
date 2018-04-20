@@ -647,12 +647,12 @@ Prefab:
     - target: {fileID: 114291410423676180, guid: 6ee80c9345c3b444c84c297c43d933ae,
         type: 2}
       propertyPath: debug
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114291410423676180, guid: 6ee80c9345c3b444c84c297c43d933ae,
         type: 2}
       propertyPath: gameSaveData.currentCheckpointID
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114291410423676180, guid: 6ee80c9345c3b444c84c297c43d933ae,
         type: 2}

@@ -20,6 +20,10 @@ public class ServerKeyController : MonoBehaviour {
             {
                 SceneController.CurrentScene.playerUI.AddMission("power", "Sovraccarico", "La porta della sala server si aprirà soltanto durante un blackout. Trova un modo di creare un sovraccarico.");
                 missionActivated = true;
+
+                pointable.pointedText = "";
+                pointable.pointedSubText = "";
+                pointable.RefreshText();
             }
         });
     }

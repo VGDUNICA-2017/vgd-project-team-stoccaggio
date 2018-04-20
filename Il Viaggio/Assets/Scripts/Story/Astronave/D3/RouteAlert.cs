@@ -22,6 +22,10 @@ public class RouteAlert : MonoBehaviour {
             {
                 isTriggered = true;
 
+                pointable.pointedText = "";
+                pointable.pointedSubText = "";
+                pointable.RefreshText();
+
                 // luci
                 lightoff.SetActive(false);
                 lighton.SetActive(true);
@@ -36,7 +40,8 @@ public class RouteAlert : MonoBehaviour {
                 // pensieri personaggio
                 SceneController.CurrentScene.SpeakToSelf("Bene, il radar di emergenza è attivo");
                 SceneController.CurrentScene.SpeakToSelf("L'urto sarà molto forte, nel mio rifugio non resisterei!", 3);
-                SceneController.CurrentScene.SpeakToSelf("Devo trovare qualche lettino speciale...", 6);
+                SceneController.CurrentScene.SpeakToSelf("Devo trovare qualcosa per resistere all'urto...", 6);
+                SceneController.CurrentScene.SpeakToSelf("Ricordo di un lettino in infermeria che potrebbe fare al caso mio, meglio controllare!", 9);
 
                 // attiva lettini
                 SceneController.CurrentScene.GetComponent<Astronave>().ActivateBeds();

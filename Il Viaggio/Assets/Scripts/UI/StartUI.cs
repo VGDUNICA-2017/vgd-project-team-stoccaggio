@@ -12,8 +12,12 @@ public class StartUI : MonoBehaviour {
 
     void Start () {
 
+        // mostra il cursore
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         // nascondi pulsanti carica se non ci sono salvataggi
-        if(GameController.CurrentController.gameSaveData == null)
+        if (GameController.CurrentController.gameSaveData == null)
             continueButton.gameObject.SetActive(false);
 
         // caricamento partita

@@ -13,7 +13,9 @@ public class EmptyFood : MonoBehaviour {
 
         pointable.ActionHandler += new Pointable.ActionEventHandler(() =>
         {
-            if (hasItem())
+            // check degli oggetti necessari allo sblocco
+            if (SceneController.CurrentScene.HasItem(item[0].GetComponent<Collectible>().itemName)
+            && SceneController.CurrentScene.HasItem(item[1].GetComponent<Collectible>().itemName))
             {
                 SceneController.CurrentScene.RemoveItem(item[0].GetComponent<Collectible>().itemName);
                 SceneController.CurrentScene.RemoveItem(item[1].GetComponent<Collectible>().itemName);
@@ -32,17 +34,6 @@ public class EmptyFood : MonoBehaviour {
                 SceneController.CurrentScene.SpeakToSelf("Devo raccogliere altre provviste...");
             }
         });
-    }
-
-    // check degli oggetti necessari allo sblocco
-    private bool hasItem()
-    {
-        // se l'oggetto non è contenuto nella lista dell'inventario
-        if (!(SceneController.CurrentScene.HasItem(item[0].GetComponent<Collectible>().itemName) && SceneController.CurrentScene.HasItem(item[1].GetComponent<Collectible>().itemName)))
-            return false;
-
-
-        return true;
     }
 
     private IEnumerator outro()
