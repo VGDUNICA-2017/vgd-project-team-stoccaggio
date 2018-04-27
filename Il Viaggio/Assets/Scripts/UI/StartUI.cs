@@ -17,7 +17,7 @@ public class StartUI : MonoBehaviour {
         Cursor.lockState = CursorLockMode.None;
 
         // nascondi pulsanti carica se non ci sono salvataggi
-        if (GameController.CurrentController.gameSaveData == null)
+        if (GameController.CurrentController.gameSaveData == null || GameController.CurrentController.gameSaveData.currentScenePath == "Terra")
             continueButton.gameObject.SetActive(false);
 
         // caricamento partita

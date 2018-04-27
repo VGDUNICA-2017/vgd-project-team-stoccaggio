@@ -23,7 +23,7 @@ public class Kill : MonoBehaviour {
             
             if(SceneController.CurrentScene.IsEquipped("pipe"))
             {
-                blow.Play();
+                medic.GetComponent<Animator>().SetTrigger("kill");
 
                 pointable.pointedText = "";
                 pointable.pointedSubText = "";
@@ -33,10 +33,10 @@ public class Kill : MonoBehaviour {
                 sense.minDistance = 0;
                 sense.angleVisual = 0;
 
-                medic.GetComponent<Animator>().SetTrigger("kill");
-
                 triggerFuga.SetActive(false);
                 triggerFuga2.SetActive(false);
+
+                blow.Play();
 
                 StartCoroutine(sceneCoroutine());
             }

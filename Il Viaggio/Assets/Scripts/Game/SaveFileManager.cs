@@ -15,6 +15,8 @@ public static class SaveFileManager {
         FileStream file = File.Create(Application.persistentDataPath + "/" + saveFileName);
         bf.Serialize(file, gsData);
         file.Close();
+
+        GameController.CurrentController.gameSaveData = gsData;
     }
 
     // caricamento del salvataggio da file

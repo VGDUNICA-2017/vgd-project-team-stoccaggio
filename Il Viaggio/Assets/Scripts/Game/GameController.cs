@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour {
 
     public static GameController CurrentController;
     public bool debug = false;
-    public GameSaveData gameSaveData;
+    public GameSaveData gameSaveData = null;
 
     void Start()
     {

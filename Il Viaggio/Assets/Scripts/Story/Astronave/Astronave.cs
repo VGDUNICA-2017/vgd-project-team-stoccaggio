@@ -296,9 +296,6 @@ public class Astronave : MonoBehaviour {
         // salvataggio
         SaveFileManager.Save(gsd);
 
-        // caricamento giorno successivo
-        GameController.CurrentController.gameSaveData = gsd;
-
         // caricamento scena
         GameController.CurrentController.LoadScene(gsd.currentScenePath);
     }

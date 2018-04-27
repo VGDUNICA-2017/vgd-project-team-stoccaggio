@@ -641,27 +641,17 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114291410423676180, guid: 6ee80c9345c3b444c84c297c43d933ae,
         type: 2}
-      propertyPath: gameSaveData.currentScenePath
-      value: Astronave
-      objectReference: {fileID: 0}
-    - target: {fileID: 114291410423676180, guid: 6ee80c9345c3b444c84c297c43d933ae,
-        type: 2}
       propertyPath: debug
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114291410423676180, guid: 6ee80c9345c3b444c84c297c43d933ae,
-        type: 2}
-      propertyPath: gameSaveData.currentCheckpointID
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114291410423676180, guid: 6ee80c9345c3b444c84c297c43d933ae,
-        type: 2}
-      propertyPath: gameSaveData.copilotSaved
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1642628097891840, guid: 6ee80c9345c3b444c84c297c43d933ae, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114291410423676180, guid: 6ee80c9345c3b444c84c297c43d933ae,
+        type: 2}
+      propertyPath: gameSaveData.currentScenePath
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ee80c9345c3b444c84c297c43d933ae, type: 2}
@@ -2017,7 +2007,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1df500a6dc8004a058cc1edb053c4ba4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 15676c18d2f0dc8409bff29ac7fde5bf, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2025,7 +2015,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
